@@ -28,9 +28,13 @@ A terminal-based installer for Gentoo Linux with an ASCII interface that simplif
    git clone https://github.com/amosbarsinai/gentifyer.git
    cd gentifyer
    ```
-3. Run the installer with root privileges:
+3. Run the Gentifyer setup:
    ```bash
-   sudo python main.py
+   python setup.py
+   ```
+4. To run the installer, you can just run:
+   ```bash
+   gentifyer
    ```
 
 ## Usage

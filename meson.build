@@ -9,6 +9,7 @@ ncurses_dep = dependency('ncurses')
 
 exe = executable('gentifyer',
   'src/main.cpp',
+  'src/screen.cpp',
   include_directories : inc,
   dependencies : ncurses_dep,
   install : true
