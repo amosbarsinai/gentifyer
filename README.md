@@ -14,10 +14,10 @@ A terminal-based installer for Gentoo Linux with an ASCII interface that simplif
 
 ## Prerequisites
 
-- A working Linux environment (Live USB/CD)
+- A working 64-bit Linux environment (Live USB/CD)
 - Internet connection
 - Minimum 8GB RAM recommended
-- At least 30GB free disk space
+- At least 16GB free disk space
 - Basic understanding of Gentoo Linux concepts
 
 ## Installation
