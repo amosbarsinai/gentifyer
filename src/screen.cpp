@@ -1,7 +1,10 @@
 #include <ncurses.h>
 #include "ui/screen.hpp"
+#include <spdlog/spdlog.h>
 
 void draw_on_screen() {
+    spdlog::info("Starting up Gentfiyer...");
+
     // Draw the border around the screen
     int rows, cols;
     getmaxyx(stdscr, rows, cols);

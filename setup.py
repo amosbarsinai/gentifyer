@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 from pathlib import Path
 from os.path import realpath
-from os import getenv
+from os import mkdir, getenv
 import sys
 from platform import architecture
 from subprocess import run
@@ -37,6 +39,17 @@ check_dep("Meson Build System", Path("/usr/bin/meson"))
 check_dep("Ninja Build System", Path("/usr/bin/ninja"))
 check_dep("Ncurses library", Path("/lib64/libncurses.so"))
 print(f"{GREEN+BOLD}All dependencies are satisfied!{RESET}")
+
+print(f"{MAGENTA+BOLD}Preparing spdlog...{RESET}")
+if not Path("subprojects").exists(): mkdir("subprojects")
+try:
+    run(["meson", "wrap", "install", "spdlog"], check=True)
+except Exception as e:
+    with open("setup_error.log", "w") as f:
+        f.write(str(e))
+    print(f"{RED+BOLD}Failed to set up spdlog. See setup_error.log for details.{RESET}")
+    print(f"{BOLD}Aborting setup.{RESET}")
+    sys.exit(1)
 
 # compile and install Gentifyer
 print(f"{MAGENTA+BOLD}Compiling and installing Gentifyer...{RESET}")
