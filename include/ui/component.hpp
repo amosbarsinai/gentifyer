@@ -2,11 +2,6 @@
 #include <string>
 #include <vector>
 
-enum class ComponentType {
-    TEXTBOX,
-    MENU
-};
-
 struct MenuOption {
     std::string title;
     std::string id;
