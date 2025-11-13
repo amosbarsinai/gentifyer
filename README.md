@@ -36,8 +36,7 @@ To run the installer, run:
    ```bash
    gentifyer
    ```
-(if /usr/local/bin isn't on PATH, this won't work. On some LiveCDs you may need to add it manually, or just
-run from the full path /usr/local/bin/gentifyer.)
+(if /usr/local/bin isn't on PATH, this won't work. On some LiveCDs you may need to add it manually, or just run from the full path /usr/local/bin/gentifyer.)
 
 ## Usage
 
