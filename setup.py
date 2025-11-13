@@ -2,16 +2,25 @@
 
 from pathlib import Path
 from os.path import realpath
-from os import mkdir, getenv
-import sys
+from os import mkdir, mkfile, getenv
+from sys import exit
 from platform import architecture
 from subprocess import run
+
+# check if setup has already been ran
+if Path(".gentifyer-setup-completed").exists():
+    print("Gentifyer setup has already been ran.")
+    print("If you edited the code and want to recompile and reinstall it, run:\n")
+    print("        meson compile -C builddir")
+    print("        sudo meson install -C builddir")
+    print("Rerunning the setup is a bad idea.")
+    exit(1)
 
 # check if arch is 32-bit
 if architecture()[0] == '32bit':
     print("Gentifyer currently only supports 64-bit systems.")
     print("Aborting setup.")
-    sys.exit(1)
+    exit(1)
 
 MAGENTA = "\033[35m"
 GREEN = "\033[32m"
@@ -28,7 +37,7 @@ def check_dep(name: str, location: Path):
         print(f"{RED}ERROR{RESET}")
         print(f"{name} isn't installed (correctly). Gentifyer won't be able to compile.")
         print(f"{BOLD}Aborting setup.{RESET}")
-        sys.exit(1)
+        exit(1)
 
 print(f"{MAGENTA+BOLD}Setting up Gentifyer...{RESET}")
 
@@ -49,7 +58,7 @@ except Exception as e:
         f.write(str(e))
     print(f"{RED+BOLD}Failed to set up spdlog. See setup_error.log for details.{RESET}")
     print(f"{BOLD}Aborting setup.{RESET}")
-    sys.exit(1)
+    exit(1)
 
 # compile and install Gentifyer
 print(f"{MAGENTA+BOLD}Compiling and installing Gentifyer...{RESET}")
@@ -61,7 +70,7 @@ if not Path("./builddir").exists():
             f.write(str(e))
         print(f"{RED+BOLD}Failed to set up Meson build directory. See setup_error.log for details.{RESET}")
         print(f"{BOLD}Aborting setup.{RESET}")
-        sys.exit(1)
+        exit(1)
 try:
     run(["meson", "compile", "-C", "builddir"], check=True)
 except Exception as e:
@@ -69,7 +78,7 @@ except Exception as e:
         f.write(str(e))
     print(f"{RED+BOLD}Failed to compile Gentifyer. See setup_error.log for details.{RESET}")
     print(f"{BOLD}Aborting setup.{RESET}")
-    sys.exit(1)
+    exit(1)
 try:
     run(["sudo", "meson", "install", "-C", "builddir"], check=True)
 except Exception as e:
@@ -79,9 +88,10 @@ except Exception as e:
     print(f"{MAGENTA+BOLD}You might need to run this script with elevated privileges (e.g., using sudo).")
     print(f"However, Gentifyer has already been compiled and can be found in ./builddir/gentifyer. You can run it directly from there without installation.{RESET}")
     print(f"{BOLD}Aborting setup.{RESET}")
-    sys.exit(1)
+    exit(1)
 
 if "/usr/local/bin" not in getenv("PATH", ""):
     print(f"{MAGENTA+BOLD}Note: /usr/local/bin is not in your PATH environment variable.")
     print(f"You may need to add it to run Gentifyer from anywhere.{RESET}")
 print(f"{GREEN+BOLD}Gentifyer has been successfully installed! You can run it using the command 'gentifyer'.{RESET}")
+mkfile(".gentifyer-setup-completed")

@@ -1,6 +1,6 @@
 #include <ncurses.h>
 #include "ui/screen.hpp"
-#include "ui/component.hpp"
+// #include "ui/component.hpp"         right now we don't need this import
 #include <variant>
 #include <spdlog/spdlog.h>
 
