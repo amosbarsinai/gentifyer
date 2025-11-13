@@ -32,10 +32,12 @@ A terminal-based installer for Gentoo Linux with an ASCII interface that simplif
    ```bash
    python setup.py
    ```
-4. To run the installer, you can just run:
+To run the installer, run:
    ```bash
    gentifyer
    ```
+(if /usr/local/bin isn't on PATH, this won't work. On some LiveCDs you may need to add it manually, or just
+run from the full path /usr/local/bin/gentifyer.)
 
 ## Usage
 
