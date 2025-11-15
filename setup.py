@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from os.path import realpath
-from os import mkdir, mkfile, getenv
+from os import mkdir, getenv
 from sys import exit
 from platform import architecture
 from subprocess import run
@@ -94,4 +94,5 @@ if "/usr/local/bin" not in getenv("PATH", ""):
     print(f"{MAGENTA+BOLD}Note: /usr/local/bin is not in your PATH environment variable.")
     print(f"You may need to add it to run Gentifyer from anywhere.{RESET}")
 print(f"{GREEN+BOLD}Gentifyer has been successfully installed! You can run it using the command 'gentifyer'.{RESET}")
-mkfile(".gentifyer-setup-completed")
+with open(".gentifyer-setup-completed", 'w'):
+    pass
