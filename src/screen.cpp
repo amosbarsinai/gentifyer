@@ -4,23 +4,23 @@
 #include <variant>
 #include <spdlog/spdlog.h>
 
-void draw_border(int width, int height) {
+void draw_border(int x, int y, int width, int height) {
     // Draw corners
-    mvaddch(0, 0, ACS_ULCORNER);
-    mvaddch(0, width - 1, ACS_URCORNER);
-    mvaddch(height - 1, 0, ACS_LLCORNER);
-    mvaddch(height - 1, width - 1, ACS_LRCORNER);
+    mvaddch(y, x, ACS_ULCORNER);
+    mvaddch(y, x + width - 1, ACS_URCORNER);
+    mvaddch(y + height - 1, x, ACS_LLCORNER);
+    mvaddch(y + height - 1, x + width - 1, ACS_LRCORNER);
 
     // Draw top and bottom borders
-    for (int x = 1; x < width - 1; ++x) {
-        mvaddch(0, x, ACS_HLINE);
-        mvaddch(height - 1, x, ACS_HLINE);
+    for (int i = x + 1; i < x + width - 1; ++i) {
+        mvaddch(y, i, ACS_HLINE);
+        mvaddch(y + height - 1, i, ACS_HLINE);
     }
 
     // Draw left and right borders
-    for (int y = 1; y < height - 1; ++y) {
-        mvaddch(y, 0, ACS_VLINE);
-        mvaddch(y, width - 1, ACS_VLINE);
+    for (int i = y + 1; i < y + height - 1; ++i) {
+        mvaddch(i, x, ACS_VLINE);
+        mvaddch(i, x + width - 1, ACS_VLINE);
     }
 }
 
@@ -65,7 +65,7 @@ void render_screen(std::vector<std::string> lines, int width, int height, int y_
         y_offset++;
     }
 
-    draw_border(width, height);
+    draw_border(0, 0, width, height);
     if (lines.size() > static_cast<std::size_t>(height - 2)) {
         std::string scrollmsg = "Use arrow keys to scroll";
         mvaddch(height - 1, (width - scrollmsg.size()) / 2 - 2, ACS_RTEE);
@@ -92,9 +92,13 @@ void handle_screen(Screen& screen) {
         if (ch == KEY_UP && y_offset < 1) {
             y_offset++;
         }
-        // DEBUG - until I add a quit menu
+        // DEBUG - remove later
         if (ch == 'b') {
             running = false;
+        }
+        if (ch == 'q') {
+            draw_border(width / 2 - 16, height / 2 - 3, 32, 6);
+            getch();
         }
     }
 }
