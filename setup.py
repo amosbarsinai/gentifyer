@@ -64,7 +64,7 @@ except Exception as e:
 print(f"{MAGENTA+BOLD}Compiling and installing Gentifyer...{RESET}")
 if not Path("./builddir").exists():
     try:
-        run(["meson", "setup", "builddir"], check=True)
+        run(["meson", "setup", "builddir", "-Ddefault_library=static"], check=True)
     except Exception as e:
         with open("setup_error.log", "w") as f:
             f.write(str(e))
